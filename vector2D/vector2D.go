@@ -42,8 +42,6 @@ func (xf *XF) Compare(xf2 *XF, hasUpdated chan bool) {
 	}
 }
 
-const ()
-
 var (
 	ZeroVector = New(0)
 	UnitVector = New(1)
