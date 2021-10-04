@@ -42,21 +42,6 @@ func (b *Bounds) Collides(oB *Bounds) bool {
 		y: oB.Y + oB.Height,
 	}
 
-	// if bMax.x < oB.X {
-	// 	return false
-	// }
-
-	// if b.X > oBMax.x {
-	// 	return false
-	// }
-
-	// if bMax.y < oB.Y {
-	// 	return false
-	// }
-
-	// if b.Y > oBMax.y {
-	// 	return false
-	// }
 	if bMax.x < oB.X || b.X > oBMax.x || bMax.y < oB.Y || b.Y > oBMax.y {
 		return false
 	}
