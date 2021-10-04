@@ -2,6 +2,7 @@ package azmath
 
 import (
 	"math"
+	"math/rand"
 )
 
 const (
@@ -19,4 +20,8 @@ func FastInvSqrt64(n float64) float64 {
 	f := math.Float64frombits(b)
 	f *= threeHalves - (halfN * f * f)
 	return f
+}
+
+func RandomFloat(min, max float64) float64 {
+	return rand.Float64()*(max-min) + min
 }
