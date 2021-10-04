@@ -133,13 +133,12 @@ func (qt *Quadtree) GetAllIntersectingObjects(object Object) []*Object {
 	return objects
 }
 
-func (qt *Quadtree) ActOnColliding(object Object, cb func(object *Object)) {
+func (qt *Quadtree) GetAllIntersectingObjectsCB(object Object, cb func(object *Object)) {
 	arr := qt.getPossibleObjects(object)
 	for i := range arr {
 		currObj := (*arr[i])
 		currBounds := currObj.GetBounds()
 		if currBounds.Collides(object.GetBounds()) {
-			// log.Println(currObj.GetObject())
 			cb(arr[i])
 		}
 
