@@ -10,7 +10,6 @@ package quadtree
  */
 
 type (
-	// Objects  []interface{}
 	Object interface {
 		GetObject() interface{}
 		GetBounds() *Bounds
@@ -43,6 +42,8 @@ func New(level int, bounds *Bounds) *Quadtree {
 	}
 }
 
+// NewDefaultTree --
+// CREATES 4 TREE SUBNODES
 func NewDefaultTree(args ...int) []*Quadtree {
 	cnt := 4
 	if len(args) == 1 {
@@ -51,6 +52,8 @@ func NewDefaultTree(args ...int) []*Quadtree {
 	return make([]*Quadtree, cnt)
 }
 
+// Insert --
+// INSERT
 func (qt *Quadtree) Insert(object Object) {
 	qt.Count++
 	objectBounds := object.GetBounds()
@@ -87,18 +90,12 @@ func (qt *Quadtree) Insert(object Object) {
 // GET ALL OBJECTS THAT *COULD* COLLIDE
 func (qt *Quadtree) getPossibleObjects(object Object) []*Object {
 	objects := qt.Objects
-	duplicateMap := make(map[int]bool)
 	index := qt.getIndex(object.GetBounds())
 	if len(qt.Tree) > 0 {
 		if index != -1 {
-			if !duplicateMap[index] {
-				duplicateMap[index] = true
-				objects = append(objects, qt.Tree[index].getPossibleObjects(object)...)
-			}
-			// objects = append(objects, qt.Tree[index].getPossibleObjects(object)...)
+			objects = append(objects, qt.Tree[index].getPossibleObjects(object)...)
 		} else {
 			for i := range qt.Tree {
-				duplicateMap[i] = true
 				objects = append(objects, qt.Tree[i].getPossibleObjects(object)...)
 			}
 		}
@@ -107,6 +104,8 @@ func (qt *Quadtree) getPossibleObjects(object Object) []*Object {
 	return objects
 }
 
+// Intersects --
+// TESTS FOR SIMPLE BOUNDS INTERSECTION
 func (qt *Quadtree) Intersects(object Object) []*Object {
 	var intersections []*Object
 	possibleCollisions := qt.getPossibleObjects(object)
@@ -118,6 +117,8 @@ func (qt *Quadtree) Intersects(object Object) []*Object {
 	return intersections
 }
 
+// GetAllIntersectingObjects --
+// RETURNS ALL INTERSECTING OBJECTS
 func (qt *Quadtree) GetAllIntersectingObjects(object Object) []*Object {
 	var objects []*Object
 	arr := qt.getPossibleObjects(object)
@@ -133,6 +134,8 @@ func (qt *Quadtree) GetAllIntersectingObjects(object Object) []*Object {
 	return objects
 }
 
+// GetAllIntersectingObjects --
+// CALLBACK FOR EACH INTERSECTING OBJECT
 func (qt *Quadtree) GetAllIntersectingObjectsCB(object Object, cb func(object *Object)) {
 	arr := qt.getPossibleObjects(object)
 	for i := range arr {
@@ -141,20 +144,11 @@ func (qt *Quadtree) GetAllIntersectingObjectsCB(object Object, cb func(object *O
 		if currBounds.Collides(object.GetBounds()) {
 			cb(arr[i])
 		}
-
 	}
 }
 
-func (qt *Quadtree) split() {
-	if len(qt.Tree) != 4 {
-		width := qt.Bounds.Width / 2
-		height := qt.Bounds.Height / 2
-		x := qt.Bounds.X
-		y := qt.Bounds.Y
-		qt.populateSplit(x, y, width, height)
-	}
-}
-
+// Clear --
+// CLEARS OBJECTS, TREE, & RESETS COUNT
 func (qt *Quadtree) Clear() {
 	qt.Objects = nil
 	for i := range qt.Tree {
@@ -165,6 +159,16 @@ func (qt *Quadtree) Clear() {
 	}
 	qt.Tree = NewDefaultTree()
 	qt.Count = 0
+}
+
+func (qt *Quadtree) split() {
+	if len(qt.Tree) != 4 {
+		width := qt.Bounds.Width / 2
+		height := qt.Bounds.Height / 2
+		x := qt.Bounds.X
+		y := qt.Bounds.Y
+		qt.populateSplit(x, y, width, height)
+	}
 }
 
 func (qt *Quadtree) populateSplit(x, y, width, height float64) {
