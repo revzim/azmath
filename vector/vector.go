@@ -23,8 +23,6 @@ func New(n ...float64) *Vector {
 	return nil
 }
 
-const ()
-
 var (
 	ZeroVector     = New(0)
 	OneVector      = New(1)
