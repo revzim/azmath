@@ -14,15 +14,6 @@ type (
 	}
 )
 
-// func New(n ...float64) *Vector {
-// 	if len(n) == 1 {
-// 		return Vector{n[0], n[0], n[0]}
-// 	} else if len(n) == 3 {
-// 		return Vector{n[0], n[1], n[2]}
-// 	}
-// 	return Vector{}
-// }
-
 func New(n ...float64) *Vector {
 	if len(n) == 1 {
 		return &Vector{n[0], n[0], n[0]}
