@@ -48,25 +48,25 @@ var (
 	Unit45Deg  = New(.77, .707) // sqrt(0.5)
 )
 
-func (v *Vector2D) Add(v2 *Vector2D) *Vector2D {
+func (v *Vector2D) Add(v2 Vector2D) *Vector2D {
 	tmpVec := New(v.X+v2.X, v.Y+v2.Y)
 	// v = tmpVec
 	return tmpVec
 }
 
-func (v *Vector2D) Subtract(v2 *Vector2D) *Vector2D {
+func (v *Vector2D) Subtract(v2 Vector2D) *Vector2D {
 	tmpVec := New(v.X-v2.X, v.Y-v2.Y)
 	// v = tmpVec
 	return tmpVec
 }
 
-func (v *Vector2D) ScaleVec(v2 *Vector2D) *Vector2D {
+func (v *Vector2D) ScaleVec(v2 Vector2D) *Vector2D {
 	tmpVec := New(v.X*v2.X, v.Y*v2.Y)
 	// v = tmpVec
 	return tmpVec
 }
 
-func (v *Vector2D) RScaleVec(v2 *Vector2D) *Vector2D {
+func (v *Vector2D) RScaleVec(v2 Vector2D) *Vector2D {
 	tmpVec := New(v.X/v2.X, v.Y/v2.Y)
 	// v = tmpVec
 	return tmpVec
@@ -100,35 +100,35 @@ func (v *Vector2D) SubtractConst(n float64) *Vector2D {
 	return tmpVec
 }
 
-func (v *Vector2D) DotProduct(v2 *Vector2D) float64 {
+func (v *Vector2D) DotProduct(v2 Vector2D) float64 {
 	ans := v.X*v2.X + v.Y*v2.Y
 	// v = tmpVec
 	return ans
 }
 
-func (v *Vector2D) CrossProduct(v2 *Vector2D) float64 {
+func (v *Vector2D) CrossProduct(v2 Vector2D) float64 {
 	ans := v.X*v2.X - v.Y*v2.Y
 	// v = tmpVec
 	return ans
 }
 
-func (v *Vector2D) DistSquared(v2 *Vector2D) float64 {
+func (v *Vector2D) DistSquared(v2 Vector2D) float64 {
 	return math.Pow(v2.X-v.X, 2) + math.Pow(v2.Y-v.Y, 2)
 }
 
-func (v *Vector2D) Dist(v2 *Vector2D) float64 {
+func (v *Vector2D) Dist(v2 Vector2D) float64 {
 	return math.Sqrt(v.DistSquared(v2))
 }
 
-func (v *Vector2D) Max(v2 *Vector2D) *Vector2D {
+func (v *Vector2D) Max(v2 Vector2D) *Vector2D {
 	return New(math.Max(v.X, v2.X), math.Max(v.Y, v2.Y))
 }
 
-func (v *Vector2D) Min(v2 *Vector2D) *Vector2D {
+func (v *Vector2D) Min(v2 Vector2D) *Vector2D {
 	return New(math.Min(v.X, v2.X), math.Min(v.Y, v2.Y))
 }
 
-func (v *Vector2D) Equal(v2 *Vector2D) bool {
+func (v *Vector2D) Equal(v2 Vector2D) bool {
 	return v.X == v2.X && v.Y == v2.Y
 }
 
@@ -136,7 +136,7 @@ func (v *Vector2D) Equals(v2 *Vector2D, tolerance float64) bool {
 	return math.Abs(v.X-v2.X) <= tolerance && math.Abs(v.Y-v2.Y) <= tolerance
 }
 
-func (v *Vector2D) NotEqual(v2 *Vector2D) bool {
+func (v *Vector2D) NotEqual(v2 Vector2D) bool {
 	return v.X != v2.X || v.Y != v2.Y
 }
 
