@@ -20,7 +20,7 @@ func NewCircle(opts GeomDataOpts) *Circle {
 func (c *Circle) Intersects(g Geometry) (bool, bool) {
 	if g.Type() == Types[CircleKey] {
 		c2 := g.GetGeomXF()
-		squaredDist := SquaredDist(c.Pos.X, c2.Pos.X, c.Pos.Y, c2.Pos.Y)
+		squaredDist := azmath.SquaredDist(c.Pos.X, c2.Pos.X, c.Pos.Y, c2.Pos.Y)
 		return squaredDist < ((c.Radius * c.Radius) + (c2.Radius * c2.Radius)), true
 		// if sqrdDist, ok := SquaredDist(c.Pos.X, c2.Pos.X, c.Pos.Y, c2.Pos.Y); ok {
 		// 	c2 := g.GetGeomXF()
