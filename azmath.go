@@ -25,3 +25,9 @@ func FastInvSqrt64(n float64) float64 {
 func RandomFloat(min, max float64) float64 {
 	return rand.Float64()*(max-min) + min
 }
+
+// Clamp3D --
+// ORDER => math.Max(x, math.Min(y, z))
+func Clamp3D(x, y, z float64) float64 {
+	return math.Max(x, math.Min(y, z))
+}
