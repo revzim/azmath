@@ -31,3 +31,9 @@ func RandomFloat(min, max float64) float64 {
 func Clamp3D(x, y, z float64) float64 {
 	return math.Max(x, math.Min(y, z))
 }
+
+// SquaredDist --
+// CALC SQUARED DIST
+func SquaredDist(x, x2, y, y2 float64) float64 {
+	return ((x-x2)*(x-x2) + (y-y2)*(y-y2))
+}

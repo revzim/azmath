@@ -1,6 +1,7 @@
 package geom
 
 import (
+	"github.com/revzim/azmath"
 	"github.com/revzim/azmath/vector2D"
 )
 
@@ -111,10 +112,6 @@ func geomIntersect(g, g2 Geometry) (bool, bool) {
 		return false, false
 	}
 
-	squaredDist := SquaredDist(closestPtToCircleCenter.X, circleXF.Pos.X, closestPtToCircleCenter.Y, circleXF.Pos.Y)
+	squaredDist := azmath.SquaredDist(closestPtToCircleCenter.X, circleXF.Pos.X, closestPtToCircleCenter.Y, circleXF.Pos.Y)
 	return squaredDist < circleXF.Radius*circleXF.Radius, true
-}
-
-func SquaredDist(x, x2, y, y2 float64) float64 {
-	return ((x-x2)*(x-x2) + (y-y2)*(y-y2))
 }
