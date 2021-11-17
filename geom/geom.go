@@ -34,7 +34,6 @@ type (
 	GeomDataOpts struct {
 		ID string
 		GeomXF
-		Bounds
 	}
 
 	GeomXF struct {

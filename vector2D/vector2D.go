@@ -1,16 +1,15 @@
 package vector2D
 
-import "math"
+import (
+	"math"
+
+	"github.com/revzim/azmath"
+)
 
 type (
 	Vector2D struct {
 		X float64 `json:"x"`
 		Y float64 `json:"y"`
-	}
-
-	XF struct {
-		*Vector2D
-		Angle float64 `json:"angle"`
 	}
 )
 
@@ -26,20 +25,6 @@ func New(n ...float64) *Vector2D {
 		return &Vector2D{n[0], n[0]}
 	}
 	return nil
-}
-
-func NewXF(x, y, angle float64) *XF {
-	xf := &XF{Angle: math.Round((math.Mod(angle*(180/math.Pi), 360.0) * fRounding)) / fRounding}
-	xf.Vector2D = New(math.Round(x*fRounding)/fRounding, math.Round(y*fRounding)/fRounding)
-	return xf
-}
-
-func (xf *XF) Compare(xf2 *XF, hasUpdated chan bool) {
-	if xf.X != xf2.X || xf.Y != xf2.Y || xf.Angle != xf2.Angle {
-		hasUpdated <- true
-	} else {
-		hasUpdated <- false
-	}
 }
 
 var (
@@ -113,7 +98,8 @@ func (v *Vector2D) CrossProduct(v2 Vector2D) float64 {
 }
 
 func (v *Vector2D) DistSquared(v2 Vector2D) float64 {
-	return math.Pow(v2.X-v.X, 2) + math.Pow(v2.Y-v.Y, 2)
+	return ((v2.X - v.X) * (v2.X - v.X)) + ((v2.Y - v.Y) * (v2.Y - v.Y))
+	// return math.Pow(v2.X-v.X, 2) + math.Pow(v2.Y-v.Y, 2)
 }
 
 func (v *Vector2D) Dist(v2 Vector2D) float64 {
@@ -140,10 +126,14 @@ func (v *Vector2D) NotEqual(v2 Vector2D) bool {
 	return v.X != v2.X || v.Y != v2.Y
 }
 
+// Size --
+// MAGNITUDE
 func (v *Vector2D) Size() float64 {
 	return math.Sqrt(v.X*v.X + v.Y*v.Y)
 }
 
+// SizeSquared --
+// MAGNITUDE SQUARED
 func (v *Vector2D) SizeSquared() float64 {
 	return v.X*v.X + v.Y*v.Y
 }
@@ -160,4 +150,13 @@ func (v *Vector2D) Lerp(v2 *Vector2D, tolerance float64) *Vector2D {
 	x := v.X + tolerance*(v2.X-v.X)
 	y := v.Y + tolerance*(v2.Y-v.Y)
 	return New(x, y)
+}
+
+func (v *Vector2D) Normalize() *Vector2D {
+	tmpVec := New(v.X, v.Y)
+	magSquared := v.SizeSquared()
+	invSqrt := azmath.FastInvSqrt64(magSquared)
+	tmpVec.X *= invSqrt
+	tmpVec.Y *= invSqrt
+	return tmpVec
 }
